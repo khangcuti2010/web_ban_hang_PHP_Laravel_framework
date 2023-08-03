@@ -15,4 +15,9 @@ class Carts_Detail extends Model
         'quantity',
         'price',
     ];
+    //mối quan hệ với model Menu
+    public function product()
+    {
+        return $this->belongsTo(Product::class,'product_id');
+    }
 }

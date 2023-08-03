@@ -34,6 +34,7 @@ class ViewServiceProvider extends ServiceProvider
         Facades\View::composer('register',MenuComposer::class);
         Facades\View::composer('login',MenuComposer::class);
         Facades\View::composer('verify-email',MenuComposer::class);
+        Facades\View::composer('order-history',MenuComposer::class);
 
         Facades\View::composer('top-bar',CartComposer::class);
         Facades\View::composer('checkout',CartComposer::class);

@@ -19,7 +19,7 @@
             <h4>My Account</h4>
             <ul class="nav">
                 <li><a href="#">My Account</a></li>
-                <li><a href="#">Order History</a></li>
+                <li><a href="/order-history">Order History</a></li>
                 <li><a href="#">Wish List</a></li>
                 <li><a href="#">Newsletter</a></li>
             </ul>

@@ -16,6 +16,7 @@ use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use \App\Http\Controllers\LogoutController;
+use App\Http\Controllers\OrderHistoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -80,7 +81,7 @@ Route::get('/verify-email', function () {
     return view('verify-email',[
         'title' => 'Xác Nhận Email'
     ]);
-})->middleware('auth')->name('verification.notice');
+})->name('verification.notice');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
@@ -108,6 +109,7 @@ Route::post('checkout',[CheckOutController::class,'addCart'])
 Route::get('logout',[LogoutController::class,'index']);
 Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/order-history', [OrderHistoryController::class, 'index']);
 
 
 
