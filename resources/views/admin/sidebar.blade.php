@@ -108,6 +108,40 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-image"></i>
+                        <p>
+                            Đơn hàng
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/order/list" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Danh Sách Đơn Hàng</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-image"></i>
+                        <p>
+                            Tài Khoản
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/user/list" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Danh Sách Tài Khoản</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

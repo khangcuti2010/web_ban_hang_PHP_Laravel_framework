@@ -66,6 +66,21 @@ class ProductController extends Controller
         ]);
     }
 
+    public function adminSearchByKeyword(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        if ($keyword) {
+            $products = Product::where('name', 'like', '%' . $keyword . '%')->paginate(9);
+        } else {
+            $products = collect(); // Tạo một collection rỗng nếu không có từ khóa
+        }
+        return view('admin.product.search',[
+            'title' => 'Danh Sách Tìm Kiếm',
+            'products' => $products,
+            'keyword' => $keyword
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

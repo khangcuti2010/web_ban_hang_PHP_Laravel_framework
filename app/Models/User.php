@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth;
 use Illuminate\Auth\Events\Verified;
+use Illuminate\Auth\Passwords\CanResetPassword;
 
 class User extends Authenticatable implements MustVerifyEmail
 {

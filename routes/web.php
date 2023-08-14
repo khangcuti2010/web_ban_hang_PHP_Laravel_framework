@@ -1,8 +1,12 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Models\User;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Users\LoginController;
 use App\Http\Controllers\Admin\MenuController;
@@ -17,6 +21,10 @@ use App\Http\Controllers\RegisterController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use \App\Http\Controllers\LogoutController;
 use App\Http\Controllers\OrderHistoryController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\UserController;
+use Illuminate\Support\Str;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -55,6 +63,7 @@ route::middleware(['auth','admin'])->group(function (){
                 Route::get('list',[ProductController::class,'index']);
                 Route::get('edit/{id}',[ProductController::class,'show']);
                 Route::post('edit/{id}',[ProductController::class,'update']);
+                Route::get('/search/{keyword?}',[ProductController::class,'adminSearchByKeyword'])->name('admin.products.search');
                 Route::delete('destroy',[ProductController::class,'destroy']);
         });
 
@@ -68,8 +77,18 @@ route::middleware(['auth','admin'])->group(function (){
             Route::delete('destroy',[SliderController::class,'destroy']);
         });
 
-        //route Upload
-        Route::post('upload/services',[UploadController::class,'store']);
+        //route Order
+        Route::prefix('order')->group(function (){
+            Route::get('list',[OrderController::class,'show']);
+            Route::get('edit/{id}',[OrderController::class,'edit']);
+            Route::post('edit/{id}',[OrderController::class,'update']);
+            Route::get('detail/{id}',[OrderController::class,'detail']);
+        });
+
+        //route User
+        Route::prefix('user')->group(function (){
+            Route::get('list',[UserController::class,'index']);
+        });
     });
 });
 Route::get('/',[MainController::class,'index'])->name('dashboard');
@@ -111,7 +130,57 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/order-history', [OrderHistoryController::class, 'index']);
 
+//Route reset mật khẩu
+// Gửi form xin reset mật khẩu
+Route::get('/forgot-password', function () {
+    return view('email-reset-password',[
+        'title' => 'Quên Mật Khẩu'
+    ]);
+})->middleware('guest')->name('password.request');
 
+// Xử lý việc gửi form xin reset mật khẩu
+Route::post('/forgot-password', function (Request $request) {
+    $request->validate(['email' => 'required|email']);
+    $status = Password::sendResetLink(
+        $request->only('email')
+    );
+    return $status === Password::RESET_LINK_SENT
+        ? back()->with(['status' => __($status)]) : back()->withErrors(['email' => __($status)]);
+})->middleware('guest')->name('password.email');
+
+// Form đặt lại mật khẩu
+Route::get('/reset-password/{token}', function (string $token) {
+    return view('reset-password', [
+        'token' => $token,
+        'title' => 'Đặt Lại Mật Khẩu'
+    ]);
+})->middleware('guest')->name('password.reset');
+
+// Xử lý form đặt lại mật khẩu
+Route::post('/reset-password', function (Request $request) {
+    $request->validate([
+        'token' => 'required',
+        'email' => 'required|email',
+        'password' => 'required|confirmed',
+    ]);
+
+    $status = Password::reset(
+        $request->only('email', 'password', 'password_confirmation', 'token'),
+        function (User $user, string $password) {
+            $user->forceFill([
+                'password' => Hash::make($password)
+            ])->setRememberToken(Str::random(60));
+
+            $user->save();
+
+            event(new PasswordReset($user));
+        }
+    );
+
+    return $status === Password::PASSWORD_RESET
+        ? redirect()->route('login')->with('status', __($status))
+        : back()->withErrors(['email' => [__($status)]]);
+})->middleware('guest')->name('password.update');
 
 
 

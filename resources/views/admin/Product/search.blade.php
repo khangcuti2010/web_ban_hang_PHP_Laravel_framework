@@ -51,6 +51,7 @@
 
         </tbody>
     </table>
-    {!! $products->links() !!}
+    <div class="pagination pagination sm">{!! $products->appends(['keyword' => $keyword])->links() !!}</div>
 @endsection
+
 

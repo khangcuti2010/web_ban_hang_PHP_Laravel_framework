@@ -25,7 +25,7 @@
                             <span class="cart-count">{{\Illuminate\Support\Facades\Auth::user()->name}}</span>
                             @endif
                             @if($user && $user->email_verified_at == null)
-                            <a href=""><span class="cart-count btn-danger">Xác Thực Email</span></a>
+                            <a href="/verify-email"><span class="cart-count btn-danger">Xác Thực Email</span></a>
                             @else
                             @endif
                         </a>

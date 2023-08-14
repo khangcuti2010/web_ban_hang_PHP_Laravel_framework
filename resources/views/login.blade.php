@@ -53,7 +53,7 @@
                         <div class="control-group">
                             <input tabindex="3" class="btn btn-inverse large" type="submit" name="login" value="Sign into your account">
                             <hr>
-                            <p class="reset">Recover your <a tabindex="4" href="#" title="Recover your username or password">username or password</a></p>
+                            <p class="reset">Recover your <a tabindex="4" href="/forgot-password" title="Recover your username or password">username or password</a></p>
                         </div>
                     </fieldset>
                     @csrf

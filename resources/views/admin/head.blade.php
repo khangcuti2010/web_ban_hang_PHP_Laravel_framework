@@ -5,7 +5,7 @@
 <!-- Google Font: Source Sans Pro -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <!-- Font Awesome -->
-<link rel="stylesheet" href="/template/admin/plugins/fontawesome-free/css/all.min.css">
+<script src="https://kit.fontawesome.com/322fbc2575.js" crossorigin="anonymous"></script>
 <!-- icheck bootstrap -->
 <link rel="stylesheet" href="/template/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 <!-- Theme style -->
