@@ -18,12 +18,23 @@ class ProductDetailController extends Controller
         $product = $this->productService->showDetail($id);
         $relativeProduct = $this->productService->relativeProduct($id);
         $random = $this->productService->getRandomProduct();
+        $comment = $this->productService->getComment($id);
         return view('product-detail',[
             'title' => $product->name,
             'product' => $product,
             'random' => $random,
             'collection1' => $relativeProduct['collection1']?? [],
-            'collection2' => $relativeProduct['collection2']?? []
+            'collection2' => $relativeProduct['collection2']?? [],
+            'comments' => $comment
+        ]);
+    }
+
+    public function show()
+    {
+        $comment = $this->productService->getAllComment();
+        return view('admin.comment.list',[
+            'title' => 'Danh Sách Bình Luận',
+            'comments' => $comment
         ]);
     }
 }

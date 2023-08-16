@@ -24,4 +24,9 @@ class Product extends Model
     {
         return $this->belongsTo(Menu::class,'menu_id');
     }
+    //mối quan hệ với model Comment
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

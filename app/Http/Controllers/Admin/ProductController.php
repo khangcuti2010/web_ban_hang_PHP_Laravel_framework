@@ -144,4 +144,19 @@ class ProductController extends Controller
             'error' => true
         ]);
     }
+
+    public function destroyComment(Request $request)
+    {
+        $result = $this->productService->destroyComment($request);
+        if($result==true){
+            return response()->json([
+                'error' => false,
+                'message' => 'Xoá thành công bình luận'
+            ]);
+        }
+
+        return response()->json([
+            'error' => true
+        ]);
+    }
 }

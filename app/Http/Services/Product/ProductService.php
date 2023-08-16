@@ -5,8 +5,10 @@ namespace App\Http\Services\Product;
 
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Models\Comment;
 use App\Models\Menu;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use mysql_xdevapi\Exception;
@@ -23,7 +25,7 @@ class ProductService
     //Hàm lấy tất cả sản phẩm
     public function getAllProduct()
     {
-        return Product::orderbyDesc('created_at')->paginate(10)->onEachSide(2);// sắp xếp giảm dần theo id và phân trang
+        return Product::orderbyDesc('created_at')->paginate(20)->onEachSide(2);// sắp xếp giảm dần theo id và phân trang
 
     }
 
@@ -41,6 +43,17 @@ class ProductService
     {
        return Product::where('id', $id)->where('active',1)->firstOrFail();
     }
+
+    public function getComment($id)
+    {
+        return Comment::where('product_id',$id)->orderbyDesc('created_at')->get();
+    }
+
+    public function getAllComment()
+    {
+        return Comment::orderbyDesc('created_at')->paginate(10);
+    }
+
     // hàm lấy sản phẩm liên quan
     public function relativeProduct($id)
     {
@@ -130,6 +143,16 @@ class ProductService
         if ($product) {
             Storage::disk('storage')->delete('/productImg/'.$product->picture);// xoá file ảnh trong storage
             return Product::where('id', $id)->delete();
+        }
+        return false;
+    }
+
+    public function destroyComment($request)
+    {
+        $id = (int)$request->input('id');
+        $comment = Comment::where('id', $id)->first();
+        if ($comment) {
+            return Comment::where('id', $id)->delete();
         }
         return false;
     }

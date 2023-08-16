@@ -4,8 +4,6 @@
             <h4>Navigation</h4>
             <ul class="nav">
                 <li><a href="./">Homepage</a></li>
-                <li><a href="./about.html">About Us</a></li>
-                <li><a href="./contact.html">Contac Us</a></li>
                 <li><a href="/cart">Your Cart</a></li>
                 @guest()
                     <li><a href="/login">Login</a></li>
@@ -18,10 +16,7 @@
         <div class="span4">
             <h4>My Account</h4>
             <ul class="nav">
-                <li><a href="#">My Account</a></li>
                 <li><a href="/order-history">Order History</a></li>
-                <li><a href="#">Wish List</a></li>
-                <li><a href="#">Newsletter</a></li>
             </ul>
         </div>
         <div class="span5">
@@ -36,6 +31,11 @@
 							<a class="vimeo" href="#">Vimeo</a>
 						</span>
         </div>
+    </div>
+    <div>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d244.90568438654645!2d106.65447399854042!3d10.850214150974537!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529bdc0bfc441%3A0xe676893e9e0aec98!2zMjEvNCBQaOG6oW0gVsSDbiBDaGnDqnUsIFBoxrDhu51uZyA5LCBHw7IgVuG6pXAsIFRow6BuaCBwaOG7kSBI4buTIENow60gTWluaCwgVmlldG5hbQ!5e0!3m2!1sen!2s!4v1692190652833!5m2!1sen!2s"
+                width="100%" height="200" style="border:0;" allowfullscreen=""
+                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
 </section>
 <section id="copyright">

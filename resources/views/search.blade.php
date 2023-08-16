@@ -40,7 +40,7 @@
                                 <div style="width: 270px; height: 384px" class="image-container">
                                 <a href="/product-detail/{{$product->id}}"><img alt="" src="/storage/productImg/{{$product->picture}}"></a><br/>
                                 </div>
-                                <a href="/product-detail/{{$product->id}}" class="title">{{$product->name}}</a><br/>
+                                <a href="/product-detail/{{$product->id}}" class="title">{{ \Illuminate\Support\Str::limit($product->name, 32) }}</a><br/>
                                 <a href="#" class="category">{{$product->menu->name}}</a>
                                 <p class="price">{{$product->price}} đồng</p>
                             </div>

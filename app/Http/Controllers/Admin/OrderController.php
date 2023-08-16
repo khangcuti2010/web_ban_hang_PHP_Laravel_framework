@@ -46,6 +46,7 @@ class OrderController extends Controller
         return view('admin.order.detail',[
             'title' => 'Chi Tiết Đơn Hàng ID: '.$id,
             'products' => $this->order->getOrderDetail($id),
+            'orders' => $this->order->getOrder($id),
         ]);
     }
 }

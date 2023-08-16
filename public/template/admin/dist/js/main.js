@@ -16,8 +16,8 @@ function removeRow(id, url) { //hàm xử lý xoá
                 if(result.error == false) {
                     alert(result.message);
                     location.reload();
-                } else {
-                    alert('Lỗi vui lòng thử lại');
+                }else if (result.error === true) {
+                    alert(result.message);
                 }
             }
         })

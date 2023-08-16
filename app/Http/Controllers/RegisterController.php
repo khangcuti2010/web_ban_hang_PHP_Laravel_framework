@@ -64,6 +64,7 @@ class RegisterController extends Controller
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
             'email_verified_at' => null, // Xác nhận email chưa được xác minh
+            'role' => 'user'
         ]);
 
         // Gửi email xác nhận

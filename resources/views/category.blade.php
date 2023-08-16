@@ -33,7 +33,7 @@
                                             <img src="/storage/productImg/{{ $product->picture }}" alt="" /></a>
                                     </p>
                                     </div>
-                                    <a href="/product-detail/{{$product->id}}" class="title">{{$product->name}}</a><br/>
+                                    <a href="/product-detail/{{$product->id}}" class="title">{{ \Illuminate\Support\Str::limit($product->name, 32) }}</a><br/>
                                     <a href="/product-detail/{{$product->id}}" class="category">{{$product->menu_name}}</a>
                                     <p class="price">{{$product->price}} đồng</p>
                                 </div>

@@ -23,6 +23,7 @@ use \App\Http\Controllers\LogoutController;
 use App\Http\Controllers\OrderHistoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Str;
 
 /*
@@ -35,7 +36,7 @@ use Illuminate\Support\Str;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-//route login
+//route login Admin
 Route::get('admin/users/login', [LoginController::class, 'index'])->name('login');
 Route::post('admin/users/login/store', [LoginController::class, 'store']);
 
@@ -89,6 +90,12 @@ route::middleware(['auth','admin'])->group(function (){
         Route::prefix('user')->group(function (){
             Route::get('list',[UserController::class,'index']);
         });
+
+        //route Comment
+        Route::prefix('comment')->group(function (){
+            Route::get('list',[ProductDetailController::class,'show']);
+            Route::delete('destroy',[ProductController::class,'destroyComment']);
+        });
     });
 });
 Route::get('/',[MainController::class,'index'])->name('dashboard');
@@ -104,13 +111,11 @@ Route::get('/verify-email', function () {
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-
     return redirect('/')->with('verified','Xác nhận Email thành công');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
-
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
@@ -118,6 +123,8 @@ Route::post('/email/verification-notification', function (Request $request) {
 Route::get('category/{menu_id}',[ProductController::class,'showByCategory'])->name('products.category');
 Route::get('/search/{keyword?}',[ProductController::class,'searchByKeyword'])->name('products.search');
 Route::get('product-detail/{id}',[ProductDetailController::class,'index']);
+Route::post('product-detail/{id}',[CommentController::class,'store'])
+    ->middleware('auth')->name('product.comment');
 Route::post('cart',[CartController::class,'index']);
 Route::get('cart',[CartController::class,'show'])->name('cart');
 Route::get('cart/delete/{id}',[CartController::class,'remove']);

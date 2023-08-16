@@ -33,7 +33,12 @@ class OrderService
 
     public function getOrderDetail($id)
     {
-            return Carts_Detail::where('cart_id', $id)->orderbyDesc('created_at')->get();
+        return Carts_Detail::where('cart_id', $id)->orderbyDesc('created_at')->get();
+    }
+
+    public function getOrder($id)
+    {
+        return Cart::where('id',$id)->get();
     }
 
 }

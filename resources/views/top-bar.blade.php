@@ -20,7 +20,7 @@
                      @endphp
                 <ul class="user-menu">
                     <li>
-                        <a href="#"><i class="fa-solid fa-user"></i>
+                        <span href="#"><i class="fa-solid fa-user"></i>
                             @if(\Illuminate\Support\Facades\Auth::user())
                             <span class="cart-count">{{\Illuminate\Support\Facades\Auth::user()->name}}</span>
                             @endif
@@ -28,7 +28,7 @@
                             <a href="/verify-email"><span class="cart-count btn-danger">Xác Thực Email</span></a>
                             @else
                             @endif
-                        </a>
+                        </span>
                     </li>
                     <li>
                         <a href="/cart"><i class="fa-solid fa-cart-shopping"></i>
@@ -39,7 +39,8 @@
                     <li><a href="/login">Login</a></li>
                     @endguest
                     @if(\Illuminate\Support\Facades\Auth::user())
-                    <li><a href="/logout">Logout</a></li>
+                        <li><a href="/order-history">Order History</a></li>
+                        <li><a href="/logout">Logout</a></li>
                     @endif
                 </ul>
             </div>

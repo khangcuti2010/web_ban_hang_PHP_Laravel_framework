@@ -115,8 +115,12 @@
                                         <li class="span3">
                                             <div class="product-box">
                                                 <span class="sale_tag"></span>
-                                                <p><a href="/product-detail/{{$product->id}}"><img src="/storage/productImg/{{ $product->picture }}" alt="" /></a></p>
-                                                <a href="/product-detail/{{$product->id}}" class="title">{{$product->name}}</a><br/>
+                                                <div style="width: 270px; height: 384px" class="image-container">
+                                                    <p><a href="/product-detail/{{$product->id}}">
+                                                            <img src="/storage/productImg/{{ $product->picture }}" alt="" /></a>
+                                                    </p>
+                                                </div>
+                                                <a href="/product-detail/{{$product->id}}" class="title">{{ \Illuminate\Support\Str::limit($product->name, 32) }}</a><br/>
                                                 <a href="/product-detail/{{$product->id}}" class="category">{{$product->menu->name}}</a>
                                                 <p class="price">{{$product->price}} đồng</p>
                                             </div>

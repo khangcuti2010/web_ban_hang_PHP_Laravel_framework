@@ -153,6 +153,32 @@
                 </div>
             </div>
         </div>
+        <div class="container">
+            <h3>Comments</h3>
+            @if(isset($comments))
+            <div class="row">
+                <div class="span8">
+                    @foreach($comments as $comment)
+                    <div class="well">
+                        <h4>{{$comment->users->name}} <small class="text-muted"> {{$comment->created_at}}</small></h4>
+                        <p>{{$comment->content}}</p>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            @endif
+            <div class="row">
+                <div class="span8">
+                    <form method="POST" action="">
+                        <h3>Add a Comment</h3>
+                        <label for="comment">Comment:</label>
+                        <textarea id="comment" name="comment" class="span8" required></textarea>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        @csrf
+                    </form>
+                </div>
+            </div>
+        </div>
     </section>
     @include('footer')
 </div>
