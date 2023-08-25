@@ -12,6 +12,16 @@
             {{ session('err') }}
         </div>
     @endif
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
+        @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
     <section class="navbar main-menu">
         <div class="navbar-inner main-menu">
             <a href="http://web-banhang.me/" class="logo pull-left"><img src="/template/themes/images/logo.png" class="site_logo" alt=""></a>
@@ -27,7 +37,7 @@
         <h4><span>Check Out</span></h4>
     </section>
     <section class="main-content">
-        <form method="POST" action="/checkout">
+        <form method="POST" action="{{route('checkout.form')}}">
         <div class="row">
             <div class="span9">
                 @php $total = 0; @endphp
@@ -64,13 +74,18 @@
                                     <td style="font-weight: bold" data-product-id="{{$product->id}}" class="total-unit">{{number_format($priceEnd,0,'','.')}} đồng</td>
                                 </tr>
                             @endforeach
+                            @php
+                                $discountArray = session('discount');
+                                $discountAmount = $discountArray['discount_amount'] ?? 0;
+                                $totalWithDiscount = $total - $total*($discountAmount/100);
+                            @endphp
                             <tr>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td id="total-price"><strong>{{number_format($total,0,'','.')}} đồng</strong></td>
+                                <td id="total-price"><strong>{{number_format($totalWithDiscount,0,'','.')}} đồng</strong></td>
                             </tr>
                             </tbody>
                         </table>
@@ -129,7 +144,7 @@
                                     <textarea name="comments" rows="3" id="textarea" class="span12"></textarea>
                                 </div>
                             </div>
-                            <input style="display: none" required name="total_price" value="{{number_format($total,0,'','.')}} đồng" type="text"  class="input-xlarge">
+                            <input style="display: none" required name="total_price" value="{{number_format($totalWithDiscount,0,'','.')}} đồng" type="text"  class="input-xlarge">
                             <button type="submit" class="btn btn-inverse pull-right">Confirm order</button>
                         </div>
                     </div>
@@ -138,6 +153,29 @@
         </div>
         @csrf
         </form>
+        @if(session('discount'))
+            <label>
+                <div class="controls">
+                    <label>
+                        <b>Đã áp dụng mã giảm giá "{{$discountArray['name']}}": Giảm {{$discountArray['discount_amount']}}% tổng giá trị đơn hàng</b>
+                    </label>
+                </div>
+                <a class="btn btn-danger" href="/checkout/delete"
+                   onclick="return confirm('Bạn có chắc chắn muốn huỷ mã giảm giá này này?')">
+                    <i class="fas fa-trash-alt"></i></a>
+            </label>
+        @else
+        <form method="post" action="{{route('discount.form')}}">
+            <label class="control-label">Discount Code</label>
+            <div class="controls">
+                <label>
+                    <input name="discount_code" type="text" placeholder="" class="input-xlarge">
+                    <input type="submit" value="Aplly Code" name="discount">
+                </label>
+            </div>
+            @csrf
+        </form>
+        @endif
     </section>
     @include('footer')
 </div>

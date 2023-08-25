@@ -24,6 +24,7 @@ use App\Http\Controllers\OrderHistoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DiscountCodeController;
 use Illuminate\Support\Str;
 
 /*
@@ -130,8 +131,10 @@ Route::get('cart',[CartController::class,'show'])->name('cart');
 Route::get('cart/delete/{id}',[CartController::class,'remove']);
 Route::post('update-cart',[CartController::class,'update']);
 Route::get('checkout',[CheckOutController::class,'index']);
-Route::post('checkout',[CheckOutController::class,'addCart'])
-    ->middleware('auth')->name('checkout.form');
+Route::get('checkout/delete',[DiscountCodeController::class,'removeDiscount']);
+Route::post('checkout/main',[CheckOutController::class,'addCart'])->name('checkout.form')->middleware('auth');
+Route::post('checkout',[DiscountCodeController::class,'checkCodeDiscount'])
+    ->middleware('auth')->name('discount.form');
 Route::get('logout',[LogoutController::class,'index']);
 Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login');
 Route::post('/login', [AuthController::class, 'login'])->name('login');

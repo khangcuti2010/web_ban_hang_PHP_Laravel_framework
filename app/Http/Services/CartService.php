@@ -110,6 +110,7 @@ class CartService
                 ]);
             }
             Session::pull('carts');
+            Session::pull('discount');
             return true;
             }
         }catch (\Exception $err){
