@@ -19,13 +19,15 @@ class ProductDetailController extends Controller
         $relativeProduct = $this->productService->relativeProduct($id);
         $random = $this->productService->getRandomProduct();
         $comment = $this->productService->getComment($id);
+        $avg_rate = $this->productService->avg_Rating($id);
         return view('product-detail',[
             'title' => $product->name,
             'product' => $product,
             'random' => $random,
             'collection1' => $relativeProduct['collection1']?? [],
             'collection2' => $relativeProduct['collection2']?? [],
-            'comments' => $comment
+            'comments' => $comment,
+            'avg_rate' => $avg_rate
         ]);
     }
 

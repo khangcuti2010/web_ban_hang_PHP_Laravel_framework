@@ -15,8 +15,9 @@ class CommentController extends Controller
         $comment->product_id = $id;
         $comment->user_id = Auth::id();
         $comment->content = $request->input('comment');
+        $comment->rating = $request->input('rate');
         $comment->save();
-        Session::flash('success', 'Thêm bình luận thành công');
+        Session::flash('success', 'Thêm đánh giá thành công');
         return redirect()->back();
     }
 }

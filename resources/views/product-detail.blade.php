@@ -4,6 +4,58 @@
 <html lang="en">
 <head>
     @include('head')
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .rate {
+            float: left;
+            height: 46px;
+            padding: 0 10px;
+        }
+
+        .rate > input {
+            display: none;
+        }
+
+        .rate > label {
+            float: right;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ccc;
+        }
+
+        .rate > label:before {
+            content: '★ ';
+        }
+
+        .rate > input:checked ~ label,
+        .rate > input:checked + label,
+        .rate > label:hover {
+            color: #ffc700;
+        }
+
+        .rate > label:hover,
+        .rate > label:hover ~ label {
+            color: #deb217;
+        }
+        .star-rating {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .star-rating i {
+            font-size: 20px;
+            color: #ffc107;
+        }
+    </style>
 </head>
 <body>
 @include('top-bar')
@@ -29,6 +81,14 @@
                     <div class="span4">
                         <a href="/storage/productImg/{{ $product->picture }}" class="thumbnail" data-fancybox-group="group1" title="Description 1">
                             <img src="/storage/productImg/{{ $product->picture }}" alt="" /></a>
+                        <div class="star-rating">
+                            @for ($i = 1; $i <= $avg_rate; $i++)
+                                <i class="fas fa-star"></i>
+                            @endfor
+                            @for ($i = $avg_rate + 1; $i <= 5; $i++)
+                                <i class="far fa-star"></i>
+                            @endfor
+                        </div>
                         <!--<ul class="thumbnails small">
                             <li class="span1">
                                 <a href="themes/images/ladies/2.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 2"><img src="themes/images/ladies/2.jpg" alt=""></a>
@@ -154,15 +214,25 @@
             </div>
         </div>
         <div class="container">
-            <h3>Comments</h3>
+            <h3>Ratings and Comments</h3>
             @if(isset($comments))
             <div class="row">
                 <div class="span8">
                     @foreach($comments as $comment)
-                    <div class="well">
-                        <h4>{{$comment->users->name}} <small class="text-muted"> {{$comment->created_at}}</small></h4>
-                        <p>{{$comment->content}}</p>
-                    </div>
+                        <div class="well">
+                            <div class="rate">
+                                <div class="star-rating">
+                                    @for ($i = 1; $i <= $comment->rating; $i++)
+                                        <i class="fas fa-star"></i>
+                                    @endfor
+                                    @for ($i = $comment->rating + 1; $i <= 5; $i++)
+                                        <i class="far fa-star"></i>
+                                    @endfor
+                                </div>
+                            </div>
+                            <h4>{{$comment->users->name}} <small class="text-muted"> {{$comment->created_at}}</small></h4>
+                            <p>{{$comment->content}}</p>
+                        </div>
                     @endforeach
                 </div>
             </div>
@@ -170,8 +240,20 @@
             <div class="row">
                 <div class="span8">
                     <form method="POST" action="">
-                        <h3>Add a Comment</h3>
-                        <label for="comment">Comment:</label>
+                        <h3>Add Rating And Comment</h3>
+                        <label for="comment">Rating:</label>
+                        <div class="rate">
+                            <input type="radio" id="star5" name="rate" value="5"  />
+                            <label for="star5" title="text">5 stars</label>
+                            <input type="radio" id="star4" name="rate" value="4" />
+                            <label for="star4" title="text">4 stars</label>
+                            <input type="radio" id="star3" name="rate" value="3" />
+                            <label for="star3" title="text">3 stars</label>
+                            <input type="radio" id="star2" name="rate" value="2" />
+                            <label for="star2" title="text">2 stars</label>
+                            <input type="radio" id="star1" name="rate" value="1" checked />
+                            <label for="star1" title="text">1 star</label>
+                        </div>
                         <textarea id="comment" name="comment" class="span8" required></textarea>
                         <button type="submit" class="btn btn-primary">Submit</button>
                         @csrf
@@ -200,6 +282,11 @@
         $('#myCarousel-2').carousel({
             interval: 2500
         });
+    });
+</script>
+<script>
+    $(':radio').change(function() {
+        console.log('New star rating: ' + this.value);
     });
 </script>
 </body>

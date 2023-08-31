@@ -54,6 +54,14 @@ class ProductService
         return Comment::orderbyDesc('created_at')->paginate(10);
     }
 
+    public function avg_Rating($id)
+    {
+        $comments = Comment::where('product_id',$id)->get();
+        $avg = $comments->avg('rating');
+        $percentage = ($avg/5)*100; //tính tỉ lệ %
+        return $showStar = round($percentage/20); //mỗi sao tương ứng 20%
+    }
+
     // hàm lấy sản phẩm liên quan
     public function relativeProduct($id)
     {
