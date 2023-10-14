@@ -34,7 +34,8 @@
                     <h4 class="title"><span class="text"><strong>Your</strong> Order History</span></h4>
                     @if(isset($orders))
                     @foreach($orders as $key => $order)
-                            <table class="table table-striped">
+                        <!-- Hiển thị danh sách thông tin đơn hàng -->
+                            <table class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
                                     <th>ID Order</th>
@@ -58,6 +59,9 @@
                                         <td>{{$order->status}}</td>
                                     </tr>
                             <tbody>
+
+                                <!-- Kiểm tra nếu có chi tiết đơn hàng -->
+                                @if(isset($orderDetails[$order->id]))
                                 <thead>
                                 <tr>
                                     <th>Product Name</th>
@@ -66,7 +70,7 @@
                                     <th>Price</th>
                                 </tr>
                                 </thead>
-                            @foreach($orderDetails as $orderDetail)
+                            @foreach($orderDetails[$order->id] as $orderDetail)
                                 @php $orderPrice =(float)$orderDetail->price @endphp
                                 <tr>
                                     <td>{{$orderDetail->product->name}}</td>
@@ -82,6 +86,7 @@
                                 </tr>
                             @endforeach
                             </tbody>
+                                        @endif
                 </table>
             @endforeach
             @endif

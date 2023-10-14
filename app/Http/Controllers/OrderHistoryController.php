@@ -28,11 +28,18 @@ class OrderHistoryController extends Controller
     public function index()
     {
         $orders = $this->orders->getCart();
-        $orderDetail = $this->orders->getOrderDetail();
+        $orderDetails = [];
+        foreach ($orders as $order) {
+            $orderDetail = $this->orders->getOrderDetail($order->id);
+
+            if ($orderDetail) {
+                $orderDetails[$order->id] = $orderDetail;
+            }
+        }
         return view('order-history',[
             'title' => 'Lịch Sủ Mua Hàng',
             'orders' => $orders,
-            'orderDetails' => $orderDetail,
+            'orderDetails' => $orderDetails,
         ]);
     }
 }
