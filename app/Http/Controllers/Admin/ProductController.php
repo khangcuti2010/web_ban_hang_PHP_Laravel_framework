@@ -81,6 +81,18 @@ class ProductController extends Controller
         ]);
     }
 
+    public function searchSuggestion(Request $request){
+        $searchTerm = $request->input('search');// Lấy nội dung tìm kiếm từ yêu cầu AJAX
+        $products = Product::select('name')->where('active',1)
+            ->where('name','like','%' .$searchTerm. '%')
+            ->get();
+        $data = [];
+        foreach ($products as $item){
+            $data[] = $item->name;
+        }
+        return $data;
+    }
+
     /**
      * Show the form for creating a new resource.
      */

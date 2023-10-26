@@ -3,8 +3,10 @@
         <div class="span4">
             <form method="GET" action="{{ route('products.search') }}" class="">
                 <input type="text" name="keyword" class="input-block-level search-query" Placeholder="Tìm kiếm theo tên"
-                       value="">
+                       id="search" value="">
                 <input class="btn btn-primary btn-lg" type="submit" name="" value="Search" />
+                <br>
+                <div id="search_list"></div>
             </form>
         </div>
         <div class="span8">
@@ -47,4 +49,36 @@
         </div>
     </div>
 </div>
+<script>
+    //Auto Complete Search Product
+    var searchTerm = "";
+    $("#search").on("keyup", function () {
+        // Lấy nội dung trường tìm kiếm
+        var newSearchTerm = $(this).val().trim();
+
+        // Kiểm tra xem nội dung trường tìm kiếm đã thay đổi
+        if (newSearchTerm !== searchTerm && newSearchTerm.length >= 3) {
+            // Lưu lại nội dung trường tìm kiếm mới
+            searchTerm = newSearchTerm;
+
+            // Gọi yêu cầu AJAX để tải dữ liệu gợi ý
+            $.ajax({
+                method: "GET",
+                url: "/suggestion",
+                data: { search: searchTerm }, // Truyền dữ liệu tìm kiếm lên server
+                success: function (response) {
+                    // Cập nhật dữ liệu gợi ý với dữ liệu từ server
+                    //console.log(response);
+                    autoComplete(response);
+                }
+            });
+        }
+    });
+        function autoComplete(availableTags)
+        {
+            $("#search").autocomplete({
+                source: availableTags
+            });
+        }
+</script>
 

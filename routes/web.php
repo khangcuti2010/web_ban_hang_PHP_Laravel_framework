@@ -123,6 +123,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 Route::get('category/{menu_id}',[ProductController::class,'showByCategory'])->name('products.category');
 Route::get('/search/{keyword?}',[ProductController::class,'searchByKeyword'])->name('products.search');
+Route::get('/suggestion',[ProductController::class,'searchSuggestion']);
 Route::get('product-detail/{id}',[ProductDetailController::class,'index']);
 Route::post('product-detail/{id}',[CommentController::class,'store'])
     ->middleware('auth')->name('product.comment');

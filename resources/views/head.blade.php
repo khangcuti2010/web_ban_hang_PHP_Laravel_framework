@@ -12,6 +12,7 @@
 <!-- global styles -->
 <link href="/template/themes/css/flexslider.css" rel="stylesheet"/>
 <link href="/template/themes/css/main.css" rel="stylesheet"/>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
 <!-- scripts -->
 <script src="/template/themes/js/jquery-1.7.2.min.js"></script>
@@ -19,6 +20,7 @@
 <script src="/template/themes/js/superfish.js"></script>
 <script src="/template/themes/js/jquery.scrolltotop.js"></script>
 <script src="https://kit.fontawesome.com/322fbc2575.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <!--[if lt IE 9]>
 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <script src="js/respond.min.js"></script>
